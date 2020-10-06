@@ -33,7 +33,6 @@ export class HomeComponent implements OnInit {
        
         this.userService.getAll()
             .pipe(first())
-        //    filter((x:any) => x.type  !== curruser.type))
             .subscribe(users=>{
               this.users = users.filter(x => x.username !== this.currentUser.username)
             });
