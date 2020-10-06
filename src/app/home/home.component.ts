@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs/operators';
+import { filter, first } from 'rxjs/operators';
 
 import { User } from '@/_models';
 import { UserService, AuthenticationService } from '@/_services';
@@ -8,12 +8,15 @@ import { UserService, AuthenticationService } from '@/_services';
 export class HomeComponent implements OnInit {
     currentUser: User;
     users = [];
+    usertype : boolean= false;
 
     constructor(
         private authenticationService: AuthenticationService,
         private userService: UserService
     ) {
         this.currentUser = this.authenticationService.currentUserValue;
+        this.currentUser.type ==="admin"?this.usertype = true:this.usertype =false;
+   
     }
 
     ngOnInit() {
@@ -27,8 +30,12 @@ export class HomeComponent implements OnInit {
     }
 
     private loadAllUsers() {
+       
         this.userService.getAll()
             .pipe(first())
-            .subscribe(users => this.users = users);
+        //    filter((x:any) => x.type  !== curruser.type))
+            .subscribe(users=>{
+              this.users = users.filter(x => x.username !== this.currentUser.username)
+            });
     }
 }

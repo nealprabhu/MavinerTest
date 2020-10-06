@@ -19,7 +19,7 @@ import { AlertComponent } from './_components';
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
-        appRoutingModule
+        appRoutingModule,
     ],
     declarations: [
         AppComponent,

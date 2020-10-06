@@ -1,9 +1,33 @@
 ﻿<h1>Hi {{currentUser.firstName}}!</h1>
-<p>You're logged in with Angular 8!!</p>
-<h3>All registered users:</h3>
-<ul>
-    <li *ngFor="let user of users">
-        {{user.username}} ({{user.firstName}} {{user.lastName}})
-        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
-    </li>
-</ul>
+<p>Welcome to the Home Page</p>
+<h3>List of all registered users:</h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 30%">First Name</th>
+            <th style="width: 30%">Last Name</th>
+            <th style="width: 30%">Username</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.username}}</td>
+            <td style="white-space: nowrap">
+                <!-- <a routerLink="edit/{{user.id}}" class="btn btn-sm btn-primary mr-1">Edit</a> -->
+                <button *ngIf="usertype" (click)="deleteUser(user.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="user.isDeleting">
+                    <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!user.isDeleting && usertype">Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="users.length===0">
+            <td colspan="4" class="text-center">
+                <span class="align-center">No users</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
